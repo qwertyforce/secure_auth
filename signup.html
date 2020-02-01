@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.google.com/recaptcha/api.js?render=6LcqV9QUAAAAAEybBVr0FWnUnFQmOVxGoQ_Muhtb"></script>
+	<title></title>
+
+	<script type="text/javascript">
+		function signup(){
+			grecaptcha.ready(function() {
+    grecaptcha.execute('6LcqV9QUAAAAAEybBVr0FWnUnFQmOVxGoQ_Muhtb', {action: 'homepage'}).then(function(token) {
+      _signup(token)
+    });
+		})}
+
+		async function _signup(){
+			var email=document.getElementById('email').value
+			var password=document.getElementById('password').value
+			console.log([email,password])
+			let signup_data = {
+				email: email,
+				password: password,
+				'g-recaptcha-response': token
+			};
+
+			let response = await fetch('/signup', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8'
+				},
+				body: JSON.stringify(signup_data)
+			});
+
+			let result = await response.json();
+			console.log(result.message)
+			alert(result.message);
+		}
+	</script>
+</head>
+<body>
+	<input type="email" id="email" name="email" name="" placeholder="email"/>
+	<input type="password" id="password" name="password" name="" placeholder="password" />
+	<button type="button" onclick="signup()">Register</button>
+
+</body>
+</html>
