@@ -386,6 +386,7 @@ app.post('/login', [
     var password = req.body.password
     var users = await find_user_by_email(email);
     if (users.length === 0) {
+        const fake_match = await bcrypt.compare("Random_text_qwfqwfg", "$2b$10$xKgSc736RxzT76ZMGyXMLe1Dge99d4PLyUOv60jpywAWJwftYcgjK"); // PROTECTION AGAINST TIMING ATTACK
         res.json({
             message: MESSAGE_FOR_AUTH_ERROR
         })
