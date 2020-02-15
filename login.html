@@ -26,11 +26,14 @@
 					'Content-Type': 'application/json;charset=utf-8'
 				},
 				body: JSON.stringify(login_data)
-			});
-
+			}); 
+			// console.log(response)
+            if(response.redirected){
+             document.location.assign('http://localhost/profile');
+            }
 			let result = await response.json();
 			console.log(result.message)
-			alert(result.message);
+			alert(JSON.stringify(result.message));
 		}
 	</script>
 </head>
@@ -38,6 +41,9 @@
 	<input type="email" id="email" name="email" name="" placeholder="email"/>
 	<input type="password" id="password" name="password" name="" placeholder="password" />
 	<button type="button" onclick="login()">Login</button>
-<div><a href="./forgot_password">Forgot password</a></div>
+<div><a href="/forgot_password">Forgot password</a></div>
+<div><a href="/signup">Sign up with email</a></div>
+<div><a href="/auth/google">Sign in/Sign up using Google</a></div>
+<div><a href="/auth/github">Sign in/Sign up using Github</a></div>
 </body>
 </html>
