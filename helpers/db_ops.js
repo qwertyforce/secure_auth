@@ -50,12 +50,14 @@ async function removeDocument(collection_name, selector) {
 
 async function insertDocuments(collection_name, documents) {
     const collection = client.db(db_main).collection(collection_name);
-    let result = await collection.insertMany(documents);
+    collection.insertMany(documents)
+    // let result = await collection.insertMany(documents);
     // return result
 }
 async function updateDocument(collection_name,selector,update) {
   const collection = client.db(db_main).collection(collection_name);
-  let result= await collection.updateOne(selector, { $set: update })
+  collection.updateOne(selector, { $set: update })
+  // let result= await collection.updateOne(selector, { $set: update })
 
 }
 
