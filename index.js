@@ -38,8 +38,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     name: "session",
-    cookie: {
-        maxAge: 14 * 24 * 60 * 60 * 1000
+    cookie: {      
+        maxAge: 14 * 24 * 60 * 60 * 1000,              //use secure: true   
+        sameSite: 'lax'
     },
     store: new MongoStore({
         url: 'mongodb://localhost/user_data',
