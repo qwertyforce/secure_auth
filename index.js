@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-app.use(cors());
+// app.use(cors());
 app.disable('x-powered-by');
 app.use(cookieParser());
 app.use(session({
