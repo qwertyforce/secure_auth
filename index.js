@@ -9,6 +9,7 @@ const https = require('https');
 const path = require('path');
 const {check} = require('express-validator');
 const Recaptcha = require('express-recaptcha').RecaptchaV3;
+const fs = require('fs');
 
 const PASS_MIN=8;
 const PASS_MAX=128;
