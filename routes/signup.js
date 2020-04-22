@@ -15,14 +15,14 @@ async function signup(req, res) {
             message: errors.array()
         });
     }
-    var email = req.body.email;
-    var password = req.body.password
-    var users = await db_ops.activated_user.find_user_by_email(email);
+    let email = req.body.email;
+    let password = req.body.password
+    let users = await db_ops.activated_user.find_user_by_email(email);
     if (users.length === 0) { //if no user with this email is registered
-        var token = await crypto_ops.generate_activation_token() //always unique
+        let token = await crypto_ops.generate_activation_token() //always unique
         let hashed_pass = await crypto_ops.hash_password(password);
         db_ops.not_activated_user.create_new_user_not_activated(email, hashed_pass, token)
-        var link = `http://localhost/activate?token=${token}`
+        let link = `http://localhost/activate?token=${token}`
         console.log(link)
         mail_ops.send_activation_letter(email, link)
         res.json({

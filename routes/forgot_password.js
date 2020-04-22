@@ -15,8 +15,8 @@ async function forgot_password(req, res) {
         });
     }
     const MESSAGE_SUCCESS = "Link for password recovery has been sent, check your email.";
-    var email = req.body.email;
-    var users = await db_ops.activated_user.find_user_by_email(email);
+    let email = req.body.email;
+    let users = await db_ops.activated_user.find_user_by_email(email);
     if (users.length === 1) {
         let token = await crypto_ops.generate_password_recovery_token()
         let user_id = users[0].id

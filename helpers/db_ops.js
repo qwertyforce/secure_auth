@@ -40,7 +40,7 @@ client.db(db_main).listCollections({
 
 async function findDocuments(collection_name, selector) {
     const collection = client.db(db_main).collection(collection_name);
-    let result = await collection.find(selector).toArray()
+    let result = collection.find(selector).toArray()
     return result
 }
 async function removeDocument(collection_name, selector) {
@@ -106,7 +106,7 @@ async function save_password_recovery_token(token, user_id) {
 }
 
 async function find_user_id_by_password_recovery_token(token) {
-    let user = await findDocuments("password_recovery", {
+    let user = findDocuments("password_recovery", {
         token: token
     })
     return user
@@ -115,30 +115,31 @@ async function find_user_id_by_password_recovery_token(token) {
 
 //////////////////////////////////////////ACTIVATED USER
 async function find_user_by_email(email) {
-    let user = await findDocuments("users", {
+    let user = findDocuments("users", {
         email: email
     })
     return user
 }
 
 async function find_user_by_oauth_id(oauth_id) {
-    let user = await findDocuments("users", {
+    let user = findDocuments("users", {
         oauth_id: oauth_id
     })
     return user
 }
 
 async function find_user_by_id(id) {
-    let user = await findDocuments("users", {
+    let user = findDocuments("users", {
         id: id
     })
     return user
 }
 
 async function create_new_user_activated(email, pass) {
+    var id=await generate_id()
     insertDocuments("users", [{
         email: email,
-        id: await generate_id(),
+        id: id,
         password: pass,
         activated: true
     }])
@@ -170,7 +171,7 @@ async function create_new_user_activated_google(oauth_id,email) {
 
 //////////////////////////////////////////NOT ACTIVATED USER
 async function find_not_activated_user_by_token(token) {
-    let user = await findDocuments("not_activated_users", {
+    let user = findDocuments("not_activated_users", {
         token: token
     })
     return user

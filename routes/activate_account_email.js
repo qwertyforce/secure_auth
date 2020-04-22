@@ -1,9 +1,9 @@
 const db_ops= require('./../helpers/db_ops.js')
 async function activate_account_email (req,res){
-	var token = req.query.token;
+	let token = req.query.token;
     console.log(token)
     if (typeof token == 'string' || token instanceof String) {
-        var users = await db_ops.not_activated_user.find_not_activated_user_by_token(token);
+        let users = await db_ops.not_activated_user.find_not_activated_user_by_token(token);
         if (users.length === 1) {
             db_ops.not_activated_user.delete_not_activated_user_by_token(token) //remove temp account
             db_ops.activated_user.create_new_user_activated(users[0].email, users[0].password)

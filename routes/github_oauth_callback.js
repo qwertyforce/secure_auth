@@ -2,7 +2,7 @@ const OAUTH = require('./../oauth_keys.js')
 const db_ops = require('./../helpers/db_ops.js')
 const axios = require('axios')
 async function github_oauth_callback(req, res) {
-    var code = req.query.code;
+    let code = req.query.code;
     try {
         let result = await axios({
             method: 'post',
@@ -24,9 +24,9 @@ async function github_oauth_callback(req, res) {
         })
         let oauth_id = result2.data.id
         console.log(oauth_id)
-        var users = await db_ops.activated_user.find_user_by_oauth_id(oauth_id)
+        let users = await db_ops.activated_user.find_user_by_oauth_id(oauth_id)
         if (users.length === 0) {
-            var usr_id = await db_ops.activated_user.create_new_user_activated_github(oauth_id)
+            let usr_id = await db_ops.activated_user.create_new_user_activated_github(oauth_id)
             req.session.user_id = usr_id;
         } else {
             req.session.user_id = users[0].id;

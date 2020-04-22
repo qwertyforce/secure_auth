@@ -46,7 +46,7 @@ let hashed_pass =  bcrypt.hash(password, SALTROUNDS);
 return hashed_pass
 }
 async function check_password(password,hash){
-let result = await bcrypt.compare(password,hash);
+let result =  bcrypt.compare(password,hash);
 return result
 }
 

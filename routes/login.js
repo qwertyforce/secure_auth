@@ -17,9 +17,9 @@ async function login(req, res) {
     }
 
     const MESSAGE_FOR_AUTH_ERROR = "This combination of email and password is not found";
-    var email = req.body.email;
-    var password = req.body.password
-    var users = await db_ops.activated_user.find_user_by_email(email);
+    let email = req.body.email;
+    let password = req.body.password
+    let users = await db_ops.activated_user.find_user_by_email(email);
     if (users.length === 0) {
         const fake_match = await crypto_ops.check_password("Random_text_qwfqwfg", "$2b$10$xKgSc736RxzT76ZMGyXMLe1Dge99d4PLyUOv60jpywAWJwftYcgjK"); // PROTECTION AGAINST TIMING ATTACK
         res.json({

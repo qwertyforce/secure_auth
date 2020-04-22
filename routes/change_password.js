@@ -15,12 +15,12 @@ async function change_password(req, res) {
     }
     const MESSAGE_FAIL = "Your link is expired or wrong";
     const MESSAGE_SUCCESS = "Password is successfully changed. Now you can log in using new password.";
-    var token = req.body.token
-    var password = req.body.password
-    var obj = await db_ops.password_recovery.find_user_id_by_password_recovery_token(token);
+    let token = req.body.token
+    let password = req.body.password
+    let obj = await db_ops.password_recovery.find_user_id_by_password_recovery_token(token);
     if (obj.length !== 0) { //IF password recovery token exists
-        var user_id = obj[0].user_id
-        var users = await db_ops.activated_user.find_user_by_id(user_id)
+        let user_id = obj[0].user_id
+        let users = await db_ops.activated_user.find_user_by_id(user_id)
         if (users.length !== 0) { //IF user exists
             let hashed_pass = await crypto_ops.hash_password(password);
             db_ops.password_recovery.update_user_password_by_id(user_id, hashed_pass)

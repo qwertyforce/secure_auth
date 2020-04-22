@@ -2,7 +2,7 @@ const OAUTH = require('./../oauth_keys.js')
 const db_ops = require('./../helpers/db_ops.js')
 const axios = require('axios')
 async function google_oauth_callback(req, res) {
-    var code = req.query.code;
+    let code = req.query.code;
     try {
         let result = await axios.post("https://oauth2.googleapis.com/token", {
             code: code,
@@ -20,9 +20,9 @@ async function google_oauth_callback(req, res) {
         let google_email = result2.data.emailAddresses[0].value;
         console.log(result2.data.resourceName);
         console.log(result2.data.emailAddresses[0].value);
-        var users = await db_ops.activated_user.find_user_by_oauth_id(google_id)
+        let users = await db_ops.activated_user.find_user_by_oauth_id(google_id)
         if (users.length === 0) {
-            var usr_id = await db_ops.activated_user.create_new_user_activated_google(google_id, google_email)
+            let usr_id = await db_ops.activated_user.create_new_user_activated_google(google_id, google_email)
             req.session.user_id = usr_id;
         } else {
             req.session.user_id = users[0].id;
