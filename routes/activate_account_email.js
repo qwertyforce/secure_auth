@@ -5,9 +5,14 @@ async function activate_account_email (req,res){
     if (typeof token == 'string' || token instanceof String) {
         let users = await db_ops.not_activated_user.find_not_activated_user_by_token(token);
         if (users.length === 1) {
-            db_ops.not_activated_user.delete_not_activated_user_by_token(token) //remove temp account
-            db_ops.activated_user.create_new_user_activated(users[0].email, users[0].password)
-            return res.send('<p>Your account is now activated. Visit <a href="http://localhost/login">http://localhost/login</a> to login in.</p>')
+            let act_users=await db_ops.activated_user.find_user_by_email(users[0].email)
+            if(act_users.length===0){  //if user doesn't exits
+                db_ops.not_activated_user.delete_not_activated_user_by_token(token) //remove temp account
+                db_ops.activated_user.create_new_user_activated(users[0].email, users[0].password)
+                return res.send('<p>Your account is now activated. Visit <a href="http://localhost/login">http://localhost/login</a> to login in.</p>')
+            }else{
+                db_ops.not_activated_user.delete_not_activated_user_by_token(token)
+            }
         }
     }
     res.send('<p>Activation link is wrong</p>')
