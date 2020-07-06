@@ -1,7 +1,7 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost/';
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost/';
 const crypto = require('crypto');
-var options = {
+const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
@@ -40,7 +40,7 @@ client.db(db_main).listCollections({
 
 async function findDocuments(collection_name, selector) {
     const collection = client.db(db_main).collection(collection_name);
-    let result = collection.find(selector).toArray()
+    const result = collection.find(selector).toArray()
     return result
 }
 async function removeDocument(collection_name, selector) {
@@ -67,12 +67,12 @@ async function generate_id() {
             if (ex) {
                 reject("error");
             }
-            let id = buffer.toString("base64")
-            let users = await find_user_by_id(id) //check if id exists
+            const id = buffer.toString("base64")
+            const users = await find_user_by_id(id) //check if id exists
             if (users.length === 0) {
                 resolve(id);
             } else {
-                let id_1 = await generate_id()
+                const id_1 = await generate_id()
                 resolve(id_1)
             }
         });
@@ -106,7 +106,7 @@ async function save_password_recovery_token(token, user_id) {
 }
 
 async function find_user_id_by_password_recovery_token(token) {
-    let user = findDocuments("password_recovery", {
+    const user = findDocuments("password_recovery", {
         token: token
     })
     return user
@@ -115,28 +115,28 @@ async function find_user_id_by_password_recovery_token(token) {
 
 //////////////////////////////////////////ACTIVATED USER
 async function find_user_by_email(email) {
-    let user = findDocuments("users", {
+    const user = findDocuments("users", {
         email: email
     })
     return user
 }
 
 async function find_user_by_oauth_id(oauth_id) {
-    let user = findDocuments("users", {
+    const user = findDocuments("users", {
         oauth_id: oauth_id
     })
     return user
 }
 
 async function find_user_by_id(id) {
-    let user = findDocuments("users", {
+    const user = findDocuments("users", {
         id: id
     })
     return user
 }
 
 async function create_new_user_activated(email, pass) {
-    var id=await generate_id()
+    const id=await generate_id()
     insertDocuments("users", [{
         email: email,
         id: id,
@@ -147,7 +147,7 @@ async function create_new_user_activated(email, pass) {
 
 
 async function create_new_user_activated_github(oauth_id) {
-    var id=await generate_id()
+    const id=await generate_id()
     insertDocuments("users", [{
         oauth_id: oauth_id,
         id: id,
@@ -157,7 +157,7 @@ async function create_new_user_activated_github(oauth_id) {
 }
 
 async function create_new_user_activated_google(oauth_id,email) {
-    var id=await generate_id()
+    const id=await generate_id()
     insertDocuments("users", [{
         oauth_id: oauth_id,
         email_google:email,
@@ -171,7 +171,7 @@ async function create_new_user_activated_google(oauth_id,email) {
 
 //////////////////////////////////////////NOT ACTIVATED USER
 async function find_not_activated_user_by_token(token) {
-    let user = findDocuments("not_activated_users", {
+    const user = findDocuments("not_activated_users", {
         token: token
     })
     return user
