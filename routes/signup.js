@@ -4,10 +4,11 @@ const mail_ops = require('./../helpers/mail_ops.js')
 const crypto_ops = require('./../helpers/crypto_ops.js')
 const {validationResult} = require('express-validator');
 async function signup(req, res) {
-    if (req.recaptcha.error) {
+    const recaptcha_score=req.recaptcha?.data?.score
+    if (req.recaptcha?.error|| (typeof recaptcha_score==="number" && recaptcha_score<0.5)) {
         return res.status(403).json({
             message: ["Captcha error"]
-        })
+        });
     }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
